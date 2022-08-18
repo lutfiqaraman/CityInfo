@@ -7,7 +7,7 @@ namespace CityInfo.API.Controllers
     public class CitiesController : ControllerBase
     {
         [HttpGet]
-        public JsonResult GetCities()
+        public JsonResult GetAllCities()
         {
             return new JsonResult(
                 new List<object>
