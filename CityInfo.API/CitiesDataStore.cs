@@ -1,4 +1,5 @@
-﻿using CityInfo.API.Models;
+﻿
+using CityInfo.API.Models;
 using System.Collections.Generic;
 
 namespace CityInfo.API
