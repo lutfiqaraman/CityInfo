@@ -4,7 +4,7 @@ namespace CityInfo.API.Models
 {
     public class PointOfInterestForCreationDto
     {
-        [Required]
+        [Required(ErrorMessage = "name cannot be empty, you should a provide a value")]
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
 
