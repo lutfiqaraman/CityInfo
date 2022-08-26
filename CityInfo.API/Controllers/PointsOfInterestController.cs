@@ -41,6 +41,9 @@ namespace CityInfo.API.Controllers
         [HttpPost]
         public ActionResult<PointOfInterestDto> CreatePointOfInterest(int cityId, [FromBody] PointOfInterestForCreationDto pointOfInterest)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             CityDto? city =
                 CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
 
