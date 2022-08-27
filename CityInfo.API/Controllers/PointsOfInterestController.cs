@@ -17,7 +17,7 @@ namespace CityInfo.API.Controllers
             if (city == null)
                 return NotFound();
 
-            return Ok(city.PointsOfInterest);    
+            return Ok(city.PointsOfInterest);
         }
 
         [HttpGet("{pointofinterestId}", Name = "GetPointOfInterest")]
@@ -29,7 +29,7 @@ namespace CityInfo.API.Controllers
             if (city == null)
                 return NotFound();
 
-            PointOfInterestDto? pointOfInterest = 
+            PointOfInterestDto? pointOfInterest =
                 city.PointsOfInterest.FirstOrDefault(p => p.Id == pointOfInterestId);
 
             if (pointOfInterest == null)
@@ -50,7 +50,7 @@ namespace CityInfo.API.Controllers
             if (city == null)
                 return NotFound();
 
-            int maxPointOfInterest = 
+            int maxPointOfInterest =
                 CitiesDataStore.Current.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
 
             var createdPointOfInterest = new PointOfInterestDto()
@@ -68,6 +68,27 @@ namespace CityInfo.API.Controllers
                     CityId = cityId,
                     PointOfInterestId = createdPointOfInterest.Id
                 }, createdPointOfInterest);
+        }
+
+        [HttpPut("{pointofinterestid}")]
+        public ActionResult<PointOfInterestDto> UpdatePointOfInterest(int cityId, int pointOfInterestId, PointOfInterestForUpdateDto pointOfInterest)
+        {
+            CityDto? city =
+                CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+
+            if (city == null)
+                return NotFound();
+
+            PointOfInterestDto? pointOfInterestFromStore = 
+                city.PointsOfInterest.FirstOrDefault(c => c.Id == pointOfInterestId);
+
+            if (pointOfInterestFromStore == null)
+                return NotFound();
+
+            pointOfInterestFromStore.Name = pointOfInterest.Name;
+            pointOfInterestFromStore.Description = pointOfInterest.Description;
+
+            return NoContent();
         }
     }
 }
