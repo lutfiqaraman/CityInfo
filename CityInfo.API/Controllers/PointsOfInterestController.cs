@@ -1,5 +1,6 @@
 ﻿using CityInfo.API.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CityInfo.API.Controllers
@@ -90,5 +91,14 @@ namespace CityInfo.API.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{pointofinterestid}")]
+        public ActionResult<PointOfInterestDto> PartiallyUpdatePointOfInterest(int cityId, int pointOfInterestId, 
+            JsonPatchDocument<PointOfInterestForUpdateDto> patchDocument)
+        {
+
+        }
+
+
     }
 }
