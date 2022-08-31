@@ -108,9 +108,25 @@ namespace CityInfo.API.Controllers
             if (pointOfInterestFromStore == null)
                 return NotFound();
 
+            PointOfInterestForUpdateDto? pointOfInterestToPatch =
+                new PointOfInterestForUpdateDto()
+                {
+                    Name = pointOfInterestFromStore.Name,
+                    Description = pointOfInterestFromStore.Description,
+                };
 
+            patchDocument.ApplyTo(pointOfInterestToPatch, ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!TryValidateModel(pointOfInterestToPatch))
+                return BadRequest(ModelState);
+
+            pointOfInterestFromStore.Name = pointOfInterestToPatch.Name;
+            pointOfInterestFromStore.Description = pointOfInterestToPatch.Description;
+
+            return NoContent();
         }
-
-
     }
 }
