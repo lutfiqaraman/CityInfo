@@ -1,5 +1,4 @@
 ﻿using CityInfo.API.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +22,11 @@ namespace CityInfo.API.Controllers
                 CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
 
             if (city == null)
+            {
+                _logger.LogInformation($"City with id {cityId} was not found when accessing point of interest.");
                 return NotFound();
-
+            }
+                
             return Ok(city.PointsOfInterest);
         }
 
