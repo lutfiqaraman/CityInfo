@@ -1,6 +1,7 @@
 using CityInfo.API;
 using CityInfo.API.DbContexts;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -31,7 +32,8 @@ builder.Services.AddSingleton<CitiesDataStore>();
 
 var app = builder.Build();
 
-builder.Services.AddDbContext<CityInfoContext>();
+builder.Services.AddDbContext<CityInfoContext>(
+    dbContextOptions => dbContextOptions.UseSqlServer("Data Source=dbo.CityInfo"));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
