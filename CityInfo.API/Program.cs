@@ -1,4 +1,5 @@
 using CityInfo.API;
+using CityInfo.API.DbContexts;
 using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
 
@@ -29,6 +30,8 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 builder.Services.AddSingleton<CitiesDataStore>();
 
 var app = builder.Build();
+
+builder.Services.AddDbContext<CityInfoContext>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
