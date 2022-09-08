@@ -33,7 +33,7 @@ builder.Services.AddSingleton<CitiesDataStore>();
 var app = builder.Build();
 
 builder.Services.AddDbContext<CityInfoContext>(
-    dbContextOptions => dbContextOptions.UseSqlServer("Data Source=dbo.CityInfo"));
+    dbContextOptions => dbContextOptions.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
