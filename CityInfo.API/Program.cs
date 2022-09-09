@@ -2,7 +2,9 @@ using CityInfo.API;
 using CityInfo.API.DbContexts;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Serilog;
+using System.Net.WebSockets;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -16,6 +18,9 @@ builder.Host.UseSerilog();
 
 
 // Add services to the container.
+
+builder.Services.AddDbContext<CityInfoContext>(option =>
+            option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers(options =>
 {
@@ -32,8 +37,7 @@ builder.Services.AddSingleton<CitiesDataStore>();
 
 var app = builder.Build();
 
-builder.Services.AddDbContext<CityInfoContext>(
-    dbContextOptions => dbContextOptions.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
