@@ -1,5 +1,6 @@
 using CityInfo.API;
 using CityInfo.API.DbContexts;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,8 @@ builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<CityInfoContext>(option =>
             option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
 
 builder.Services.AddControllers(options =>
 {
