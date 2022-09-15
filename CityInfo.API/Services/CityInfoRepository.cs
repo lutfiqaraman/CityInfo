@@ -17,9 +17,14 @@ namespace CityInfo.API.Services
             return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
         }
 
-        public Task<City?> GetCityById(int cityId, bool includePointsOfInterest)
+        public async Task<City?> GetCityById(int cityId, bool includePointsOfInterest)
         {
-            throw new NotImplementedException();
+            if (includePointsOfInterest)
+                return await _context.Cities.Include(c => c.PointsOfInterest)
+                    .Where(c => c.Id == cityId).FirstOrDefaultAsync();
+
+            return await _context.Cities
+                .Where(c => c.Id == cityId).FirstOrDefaultAsync();
         }
 
         public Task<PointOfInterest?> GetPointOfInterestForCity(int cityId, int pointOfInterestId)
