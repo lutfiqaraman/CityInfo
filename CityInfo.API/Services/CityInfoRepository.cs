@@ -12,6 +12,14 @@ namespace CityInfo.API.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest)
+        {
+            City? city = await GetCityById(cityId, false);
+
+            if (city != null)
+                city.PointsOfInterest.Add(pointOfInterest);
+        }
+
         public async Task<IEnumerable<City>> GetCities()
         {
             return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
@@ -43,6 +51,14 @@ namespace CityInfo.API.Services
         public async Task<bool> IsCityExist(int cityId)
         {
             return await _context.Cities.AnyAsync(c => c.Id == cityId);
+        }
+
+        public async Task<bool> SaveChanges()
+        {
+            bool result =
+                await _context.SaveChangesAsync() >= 0;
+
+            return result;
         }
     }
 }

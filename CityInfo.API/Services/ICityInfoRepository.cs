@@ -9,5 +9,7 @@ namespace CityInfo.API.Services
         Task<bool> IsCityExist(int cityId);
         Task<IEnumerable<PointOfInterest>> GetPointsOfInterestForCity(int cityId);
         Task<PointOfInterest?> GetPointOfInterestForCity(int cityId, int pointOfInterestId);
+        Task AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest);
+        Task<bool> SaveChanges();
     }
 }
