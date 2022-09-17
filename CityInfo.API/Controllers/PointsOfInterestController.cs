@@ -149,23 +149,23 @@ namespace CityInfo.API.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("{pointofinterestid}")]
-        //public ActionResult DeletePointOfInterest(int cityId, int pointOfInterestId)
-        //{
-        //    CityDto? city =
-        //        _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
+        [HttpDelete("{pointofinterestid}")]
+        public async Task<ActionResult> DeletePointOfInterest(int cityId, int pointOfInterestId)
+        {
+            if (!await cityInfoRepository.IsCityExist(cityId))
+                return NotFound();
 
-        //    if (city == null)
-        //        return NotFound();
+            var pointOfInterestEntity = 
+                await cityInfoRepository.GetPointOfInterestForCity(cityId, pointOfInterestId);
 
-        //    PointOfInterestDto? pointOfInterestFromStore =
-        //        city.PointsOfInterest.FirstOrDefault(c => c.Id == pointOfInterestId);
+            if (pointOfInterestEntity == null)
+                NotFound();
+            else
+                cityInfoRepository.DeletePointOfInterest(pointOfInterestEntity);
 
-        //    if (pointOfInterestFromStore == null)
-        //        return NotFound();
+            await cityInfoRepository.SaveChanges();
 
-        //    city.PointsOfInterest.Remove(pointOfInterestFromStore);
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
     }
 }

@@ -20,6 +20,11 @@ namespace CityInfo.API.Services
                 city.PointsOfInterest.Add(pointOfInterest);
         }
 
+        public void DeletePointOfInterest(PointOfInterest pointOfInterest)
+        {
+            _context.PointOfInterests.Remove(pointOfInterest);
+        }
+
         public async Task<IEnumerable<City>> GetCities()
         {
             return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
